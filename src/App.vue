@@ -1,18 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div id="app">
+  <input type="number" v-model="colourCount" />
+  <div class="colour-container">
+    <Colour v-for="n in componentCount" />
+  </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Colour from './components/Colour.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    Colour
+  },
+    data() {
+        return {
+            colourCount: 1
+        }
+    },
+    computed: {
+        componentCount() {
+            return this.colourCount;
+        }
+    }
 }
 </script>
 
@@ -23,6 +35,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
+  margin: 0;
+  padding: 0;
+
+  height: 100vh;
+}
+
+.colour-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 </style>
