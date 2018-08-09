@@ -4,16 +4,16 @@
      v-bind:style="{ 'background-color': rgbHex, color: textColour }">
   <p>{{ rgbHex }}</p>
   <Slider
-    :initial="red"
-    v-on:slider-update="setColour('red', $event)">
+    :colour="'red'"
+    @sliderUpdated="setColour('red', $event)">
   </Slider>
   <Slider
-    :initial="green"
-    v-on:slider-update="setColour('green', $event)">
+    :colour="'green'"
+    @sliderUpdated="setColour('green', $event)">
   </Slider>
   <Slider
-    :initial="blue"
-    v-on:slider-update="setColour('blue', $event)">
+    :colour="'blue'"
+    @sliderUpdated="setColour('blue', $event)">
   </Slider>
   <button v-on:click="generateColour()">Random</button>
 </div>

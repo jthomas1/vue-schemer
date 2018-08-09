@@ -2,7 +2,7 @@
 <div id="app">
   <input type="number" v-model="colourCount" />
   <div class="colour-container">
-    <Colour v-for="n in componentCount" />
+    <Colour v-for="(n, index) in componentCount" :key="index"/>
   </div>
   </div>
 </template>
@@ -15,16 +15,16 @@ export default {
   components: {
     Colour
   },
-    data() {
-        return {
-            colourCount: 1
-        }
-    },
-    computed: {
-        componentCount() {
-            return this.colourCount;
-        }
+  data() {
+    return {
+      colourCount: 1
     }
+  },
+  computed: {
+    componentCount() {
+      return this.colourCount;
+    }
+  }
 }
 </script>
 
