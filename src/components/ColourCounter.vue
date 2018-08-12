@@ -1,6 +1,7 @@
 <template>
     <input
         type="number"
+        min="1"
         :value="colourCount"
         @change="updateCount"
     />
@@ -16,7 +17,6 @@
         },
         methods: {
             updateCount(event) {
-                console.log(event.target.value);
                 if (event.target.value > this.colourCount) {
                     this.$store.commit('addColour');
                 } else {

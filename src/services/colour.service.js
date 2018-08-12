@@ -1,3 +1,18 @@
+export {
+    generateColour,
+    rgbHex,
+    textColour
+}
+
+function generateColour() {
+    const rgb = generateRgb();
+
+    return {
+        rgb,
+        hex: rgbHex(rgb)
+    }
+}
+
 function generateRgb() {
     return {
         red: random(0, 255),
@@ -6,11 +21,11 @@ function generateRgb() {
     }
 }
 
-function rgbHex(red, green, blue) {
+function rgbHex({ red, green, blue }) {
     return `#${dec2Hex(red)}${dec2Hex(green)}${dec2Hex(blue)}`;
 }
 
-function textColour(red, green, blue) {
+function textColour({ red, green, blue }) {
     return brightness(red, green, blue) > 125 ? 'black' : 'white';
 }
 
@@ -19,7 +34,7 @@ function random(min, max) {
 }
 
 function dec2Hex(dec) {
-    let hex = dec.toString(16);
+    let hex = parseInt(dec).toString(16);
     return hex.length === 1 ? '0' + hex : hex;
 }
 
@@ -30,15 +45,9 @@ function dec2Hex(dec) {
 function brightness(red, green, blue) {
     return Math.round(
         Math.sqrt(
-            Math.pow(red, 2) * 0.299 +
-            Math.pow(green, 2) * 0.587 +
-            Math.pow(blue, 2) * 0.114
+            Math.pow(parseInt(red), 2) * 0.299 +
+            Math.pow(parseInt(green), 2) * 0.587 +
+            Math.pow(parseInt(blue), 2) * 0.114
         )
     );
-}
-
-export {
-    generateRgb,
-    rgbHex,
-    textColour
 }

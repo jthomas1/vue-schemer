@@ -1,8 +1,8 @@
 <template lang="html">
 
 <div class="colour"
-     v-bind:style="{ 'background-color': rgbHex, 'colour': textColour }">
-  <p>{{ rgbHex }}</p>
+     :style="{ 'background-color': hex, 'color': textColour }">
+  <p>{{ hex }}</p>
   <ColourSlider
     :colour="red"
     @sliderUpdated="setColourValue({ red: $event })">
@@ -22,7 +22,7 @@
 
 <script lang="js">
 import ColourSlider from './ColourSlider.vue';
-import { rgbHex, textColour } from '../services/colour.service';
+import { textColour } from '../services/colour.service';
 
 export default  {
     name: 'ColourBar',
@@ -31,20 +31,20 @@ export default  {
         ColourSlider
     },
     computed: {
-        rgbHex() {
-            return rgbHex(this.red, this.green, this.blue);
+        hex() {
+            return this.colour.hex;
         },
         textColour() {
-            return textColour(this.red, this.green, this.blue)
+            return textColour(this.colour.rgb)
         },
         red() {
-            return parseInt(this.colour.rgb.red);
+            return this.colour.rgb.red;
         },
         green() {
-            return parseInt(this.colour.rgb.green);
+            return this.colour.rgb.green;
         },
         blue() {
-            return parseInt(this.colour.rgb.blue);
+            return this.colour.rgb.blue;
         }
     },
     methods: {
