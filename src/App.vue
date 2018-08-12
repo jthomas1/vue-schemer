@@ -9,6 +9,7 @@
     </div>
 </template>
 
+
 <script>
     import ColourBar from './components/ColourBar.vue';
     import ControlPanel from './components/ControlPanel';
@@ -21,6 +22,13 @@
         },
         mounted() {
             this.$store.commit('addColour');
+
+            window.addEventListener('keyup', function(event) {
+                console.log('hello keypress!', event);
+                if (event.which === 32) {
+                    this.$store.commit('randomiseAll');
+                }
+            }.bind(this));
         }
     }
 </script>

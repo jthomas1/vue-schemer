@@ -26,17 +26,19 @@ export default new Vuex.Store({
         removeColour(state) {
             state.colours.pop();
         },
+        randomiseAll(state) {
+            state.colours.forEach(colour => {
+                Object.assign(colour, generateColour())
+            });
+        },
         randomiseColour(state, id) {
             const colour = state.colours.find(c => c.id === id);
-            Object.assign(colour, generateColour())
+            Object.assign(colour, generateColour());
         },
         updateColour(state, params) {
             const colour = state.colours.find(c => c.id === params.id);
             Object.assign(colour.rgb, params.updatedValue);
             colour.hex = rgbHex(colour.rgb);
         }
-    },
-    actions: {
-
     }
 })
