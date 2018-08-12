@@ -1,30 +1,29 @@
 <template>
 <div id="app">
-  <input type="number" v-model="colourCount" />
+  <ColourCounter />
   <div class="colour-container">
-    <Colour v-for="(n, index) in componentCount" :key="index"/>
+    <ColourBar
+        v-for="(colour, index) in this.$store.getters.getColours"
+        :key="index"
+        :colour="colour"
+    />
   </div>
   </div>
 </template>
 
 <script>
-import Colour from './components/Colour.vue'
+import ColourBar from './components/ColourBar.vue';
+import ColourCounter from './components/ColourCounter';
 
 export default {
-  name: 'app',
-  components: {
-    Colour
-  },
-  data() {
-    return {
-      colourCount: 1
+    name: 'app',
+    components: {
+        ColourBar,
+        ColourCounter
+    },
+    mounted() {
+        this.$store.commit('addColour');
     }
-  },
-  computed: {
-    componentCount() {
-      return this.colourCount;
-    }
-  }
 }
 </script>
 
