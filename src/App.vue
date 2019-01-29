@@ -1,9 +1,9 @@
 <template>
     <div id="app">
-        <ControlPanel />
+        <ColourCounter :colour-count="colourCount" @update="updateCount($event)"></ColourCounter>
         <ColourBar
-            v-for="(colour, index) in this.$store.getters.getColours"
-            :key="index"
+            v-for="colour in colours"
+            :key="colour.id"
             :colour="colour"
         />
     </div>
@@ -12,23 +12,56 @@
 
 <script>
     import ColourBar from './components/ColourBar.vue';
-    import ControlPanel from './components/ControlPanel';
+    import ColourCounter from './components/ColourCounter';
+    import { generateColour } from './services/colour.service';
 
     export default {
         name: 'app',
         components: {
             ColourBar,
-            ControlPanel
+            ColourCounter
+        },
+        data() {
+            return {
+                colours: [
+                    generateColour()
+                ],
+            }
+        },
+        computed: {
+            colourCount() {
+                return this.colours.length;
+            }
         },
         mounted() {
-            this.$store.commit('addColour');
-
             window.addEventListener('keyup', function(event) {
                 console.log('hello keypress!', event);
                 if (event.which === 32) {
                     this.$store.commit('randomiseAll');
                 }
             }.bind(this));
+        },
+        methods: {
+            updateCount(value) {
+                if (value > this.colourCount) {
+                    this.addColour();
+                }
+
+                if (value < this.colourCount) {
+                    this.removeColour();
+                }
+
+                this.colourCount = value;
+            },
+            addColour() {
+                const colour = generateColour();
+                this.colours.push(
+                  Object.assign({ id: this.colours.length + 1 }, colour)
+                );
+            },
+            removeColour() {
+                this.colours.pop();
+            }
         }
     }
 </script>

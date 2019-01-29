@@ -1,18 +1,18 @@
 <template lang="html">
 
-    <div class="colour" :style="{ 'background-color': hex, 'color': textColour }">
+    <div class="colour" :style="{ 'background-color': hex, 'color': textShade }">
         <div class="controls">
             <p>{{ hex }}</p>
             <ColourSlider
-                :colour="red"
+                :colour="colour.rgb.red"
                 @sliderUpdated="setColourValue({ red: $event })">
             </ColourSlider>
             <ColourSlider
-                :colour="green"
+                :colour="colour.rgb.green"
                 @sliderUpdated="setColourValue({ green: $event })">
             </ColourSlider>
             <ColourSlider
-                :colour="blue"
+                :colour="colour.rgb.blue"
                 @sliderUpdated="setColourValue({ blue: $event })">
             </ColourSlider>
             <button @click="randomise">Random</button>
@@ -32,30 +32,18 @@
         components: {
             ColourSlider
         },
-        computed: {
-            hex() {
-                return this.colour.hex;
-            },
-            textColour() {
-                return textColour(this.colour.rgb)
-            },
-            red() {
-                return this.colour.rgb.red;
-            },
-            green() {
-                return this.colour.rgb.green;
-            },
-            blue() {
-                return this.colour.rgb.blue;
+        data() {
+            return {
+                hex: this.colour.hex,
+                red: this.colour.rgb.red,
+                green: this.colour.rgb.green,
+                blue: this.colour.rgb.blue,
+                textShade: textColour(this.colour.rgb)
             }
         },
         methods: {
             setColourValue(updatedValue) {
-                this.$store.commit({
-                    type: 'updateColour',
-                    id: this.colour.id,
-                    updatedValue
-                });
+                this.$emit('updated', Object.assign(this.colour, updatedValue));
             },
             randomise() {
                 this.$store.commit('randomiseColour', this.colour.id);
