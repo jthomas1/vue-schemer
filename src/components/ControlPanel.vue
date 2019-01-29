@@ -1,17 +1,13 @@
 <template>
     <div class="control-panel floating-controls">
-        <ColourCounter />
+        <button @click="$emit('add-colour')">Add</button>
+        <button @click="$emit('remove-colour')">Remove</button>
     </div>
 </template>
 
 <script>
-    import ColourCounter from './ColourCounter';
-
     export default {
-        name: "ControlPanel",
-        components: {
-            ColourCounter
-        }
+        name: "ControlPanel"
     }
 </script>
 

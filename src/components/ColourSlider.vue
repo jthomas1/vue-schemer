@@ -1,13 +1,13 @@
 <template lang="html">
 
   <div class="slider">
-    <span class="current-value">{{selectedColour}}</span>
+    <span class="current-value">{{value}}</span>
     <input
         type="range"
         min="0"
         max="255"
-        :value="selectedColour"
-        @input="emitSelectedColour"
+        v-model="value"
+        @input="$emit('updated', value)"
     />
   </div>
 
@@ -17,14 +17,9 @@
 export default  {
     name: 'slider',
     props:  ["colour"],
-    computed: {
-        selectedColour() {
-            return this.colour;
-        }
-    },
-    methods: {
-        emitSelectedColour(event) {
-            this.$emit('sliderUpdated', event.target.value)
+    data() {
+        return {
+            value: this.colour
         }
     }
 }

@@ -1,9 +1,9 @@
 <template>
     <div id="app">
-        <ColourCounter :colour-count="colourCount" @update="updateCount($event)"></ColourCounter>
+        <ControlPanel v-on:add-colour="addColour" v-on:remove-colour="removeColour"></ControlPanel>
         <ColourBar
-            v-for="colour in colours"
-            :key="colour.id"
+            v-for="(colour, index) in colours"
+            :key="index"
             :colour="colour"
         />
     </div>
@@ -12,14 +12,14 @@
 
 <script>
     import ColourBar from './components/ColourBar.vue';
-    import ColourCounter from './components/ColourCounter';
+    import ControlPanel from './components/ControlPanel';
     import { generateColour } from './services/colour.service';
 
     export default {
         name: 'app',
         components: {
             ColourBar,
-            ColourCounter
+            ControlPanel
         },
         data() {
             return {
@@ -28,31 +28,14 @@
                 ],
             }
         },
-        computed: {
-            colourCount() {
-                return this.colours.length;
-            }
-        },
         mounted() {
             window.addEventListener('keyup', function(event) {
-                console.log('hello keypress!', event);
                 if (event.which === 32) {
                     this.$store.commit('randomiseAll');
                 }
             }.bind(this));
         },
         methods: {
-            updateCount(value) {
-                if (value > this.colourCount) {
-                    this.addColour();
-                }
-
-                if (value < this.colourCount) {
-                    this.removeColour();
-                }
-
-                this.colourCount = value;
-            },
             addColour() {
                 const colour = generateColour();
                 this.colours.push(

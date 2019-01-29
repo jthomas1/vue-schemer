@@ -4,16 +4,16 @@
         <div class="controls">
             <p>{{ hex }}</p>
             <ColourSlider
-                :colour="colour.rgb.red"
-                @sliderUpdated="setColourValue({ red: $event })">
+                :colour="red"
+                @updated="setColourValue({ red: parseInt($event) })">
             </ColourSlider>
             <ColourSlider
-                :colour="colour.rgb.green"
-                @sliderUpdated="setColourValue({ green: $event })">
+                :colour="green"
+                @updated="setColourValue({ green: parseInt($event) })">
             </ColourSlider>
             <ColourSlider
-                :colour="colour.rgb.blue"
-                @sliderUpdated="setColourValue({ blue: $event })">
+                :colour="blue"
+                @updated="setColourValue({ blue: parseInt($event) })">
             </ColourSlider>
             <button @click="randomise">Random</button>
         </div>
@@ -24,7 +24,7 @@
 
 <script lang="js">
     import ColourSlider from './ColourSlider.vue';
-    import {textColour} from '../services/colour.service';
+    import { textColour, rgbHex, generateColour } from '../services/colour.service';
 
     export default {
         name: 'ColourBar',
@@ -43,10 +43,18 @@
         },
         methods: {
             setColourValue(updatedValue) {
-                this.$emit('updated', Object.assign(this.colour, updatedValue));
+                const updatedRgb = Object.assign(this.colour.rgb, updatedValue);
+                const updated = {
+                    hex: rgbHex(updatedRgb),
+                    rgb: updatedRgb
+                };
+                Object.assign(this, updatedRgb);
+                this.hex = updated.hex;
             },
             randomise() {
-                this.$store.commit('randomiseColour', this.colour.id);
+                const randomRgb = generateColour();
+                Object.assign(this, randomRgb.rgb);
+                this.hex = randomRgb.hex
             }
         }
     }
