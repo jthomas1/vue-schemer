@@ -7,7 +7,6 @@
         min="0"
         max="255"
         v-model="value"
-        @input="$emit('updated', value)"
     />
   </div>
 
@@ -17,9 +16,14 @@
 export default  {
     name: 'slider',
     props:  ["colour"],
-    data() {
-        return {
-            value: this.colour
+    computed: {
+        value: {
+            get() {
+                return this.colour
+            },
+            set(value) {
+                this.$emit('updated', value)
+            }
         }
     }
 }
