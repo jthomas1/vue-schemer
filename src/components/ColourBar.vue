@@ -50,11 +50,13 @@
                 };
                 Object.assign(this, updatedRgb);
                 this.hex = updated.hex;
+                this.textShade = textColour(updatedRgb);
             },
             randomise() {
                 const randomRgb = generateColour();
                 Object.assign(this, randomRgb.rgb);
-                this.hex = randomRgb.hex
+                this.hex = randomRgb.hex;
+                this.textShade = textColour(randomRgb.rgb);
             }
         }
     }
